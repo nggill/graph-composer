@@ -16,12 +16,13 @@ import random
 
 class Vertex:
     def __init__(self, value): # value will be the word
-        self.value=value
+        self.value = value
         self.adjacent = {} # nodes that have an edge from this vertex
         self.neighbors = []
         self.neighbors_weights = []
 
-
+    def __str__(self):
+        return self.value + ' '.join([node.value for node in self.adjacent.keys()])
 
     def add_edge_to(self, vertex, weight=0):
         self.adjacnet[vertex] = weight
@@ -37,7 +38,7 @@ class Vertex:
 
     def next_word(self):
         # randomly select next word based on weights
-        return random.choices(self.neighbors, weight=self.neighbors_weights)[0]
+        return random.choices(self.neighbors, weights=self.neighbors_weights)[0]
 
 class Graph:
     def __init__(self):
@@ -55,10 +56,10 @@ class Graph:
         # what if the value isnt in the graph?
         if value not in self.vertices:
             self.add_vertex(value)
-        return self.verticles[value]
+        return self.vertices[value]
 
     def get_next_word(self, current_vertex):
-        self.verticles[current_vertex.value]
+       return self.vertices[current_vertex.value].next_word()
 
     def generate_probability_mappings(self):
         for vertex in self.vertices.values():

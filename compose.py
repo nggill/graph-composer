@@ -1,12 +1,13 @@
 import string 
 from graph import Graph, Vertex
+import random
 def get_words_from_text(text_path):
     with open(text_path, 'r') as f:
         text = f.read()
 
         text = ' '.join(text.split()) # this is saying "turn white space into just spaces"
         text = text.lower()
-        text = text.translate(str.maketrans('', '', string.puncuation))
+        text = text.translate(str.maketrans('', '', string.punctuation))
 
     words = text.split()
     return words
@@ -29,6 +30,15 @@ def make_graph(words):
 
     return g
 
+def compose(g, words, length=50):
+    composition = []
+    word = g.get_vertex(random.choice(words)) # pick a random word to start
+    for _ in range(length):
+        composition.append(word.value)
+        word = g.get_next_word(word)
+
+    return composition
+
 def main():
     # step 1: get words from text
     words = get_words_from_text('texts/hp_sorcerer_stone.txt')
@@ -37,6 +47,11 @@ def main():
     g = make_graph(words)
 
     # step 3: get the next word for the x number of words (defined by user)
-
     # step 4: show user
+
+    composition = compose(g, words, 100)
+    return ' '.join(composition)
+
+if __name__ == '__main__':
+    print(main())
     pass
