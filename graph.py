@@ -25,11 +25,14 @@ class Vertex:
         return self.value + ' '.join([node.value for node in self.adjacent.keys()])
 
     def add_edge_to(self, vertex, weight=0):
-        self.adjacnet[vertex] = weight
+        self.adjacent[vertex] = weight
     
     def increment_edge(self, vertex):
         # this is incrementing the weight of the edge
         self.adjacent[vertex] = self.adjacent.get(vertex, 0) + 1
+
+    def get_adjacent_nodes(self):
+        return self.adjacent.keys()
 
     def get_probability_map(self):
         for (vertex, weight) in self.adjacent.items():
