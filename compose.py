@@ -1,15 +1,21 @@
+import os 
+import re
 import string 
-from graph import Graph, Vertex
 import random
+from graph import Graph, Vertex
+
 def get_words_from_text(text_path):
-    with open(text_path, 'r') as f:
-        text = f.read()
+    with open(text_path, 'r') as file:
+        text = file.read().decode("utf-8")
 
         text = ' '.join(text.split()) # this is saying "turn white space into just spaces"
         text = text.lower()
         text = text.translate(str.maketrans('', '', string.punctuation))
 
     words = text.split()
+
+    words = words[:1000]
+
     return words
 
 def make_graph(words):
@@ -54,4 +60,3 @@ def main():
 
 if __name__ == '__main__':
     print(main())
-    pass
